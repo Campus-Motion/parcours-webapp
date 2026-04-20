@@ -21,9 +21,12 @@ function HomeContent() {
   };
 
   return (
+    <div className="main-page"
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', padding: '2rem' }}>
+      <img src="/assets/images/logo_rouge.png" width="75%" alt="Logo" />
+
     <div className="glass-card">
-      <h1 className="title">Campus Motion</h1>
-      
+    
       {station ? (
         <>
           <p className="subtitle">
@@ -36,7 +39,11 @@ function HomeContent() {
       ) : (
         <>
           <p className="subtitle">
-            Welcome to the connected sport course. Start your session below to track your progress.
+            Welcome to Campus Motion's connected sport course. Our goal is to make you move and have fun while doing it !
+            <br /> <br />
+            This website is designed to guide you through our physical track, where you can check in at each station to get a personalized exercise.
+            <br /><br />
+            To begin the course, start a session.
           </p>
           <button onClick={handleStart} disabled={loading} className="btn">
             {loading ? 'Starting...' : 'Start New Session'}
@@ -52,6 +59,7 @@ function HomeContent() {
         <Link href="/summary" className="btn btn-secondary" style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}>View Summary</Link>
       </div>
     </div>
+  </div>
   );
 }
 
