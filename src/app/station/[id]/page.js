@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { getExerciseForStation } from '@/lib/exercises';
 
@@ -8,9 +8,14 @@ export default function StationPage({ params }) {
   const stationId = params.id;
   const [status, setStatus] = useState('loading');
   const [exercise, setExercise] = useState('');
-
+  const nextStationId = `${(Number(stationId) + 1)% 7}`;
+  const hasFetched = useRef(false);
+  
   useEffect(() => {
     setExercise(getExerciseForStation(stationId));
+
+    if (hasFetched.current) return;
+    hasFetched.current = true;
 
     // Submit scan to backend
     fetch('/api/station', {
@@ -56,12 +61,15 @@ export default function StationPage({ params }) {
         <span className="stat-label">Exercise</span>
         <span className="stat-value">{exercise}</span>
       </div>
-      <p className="subtitle" style={{ color: '#4ade80' }}>
+      <p className="subtitle" style={{ color: 'var(--accent-green)' }}>
         Check-in recorded! Good luck with the exercise.
       </p>
       
       <Link href="/summary" className="btn btn-secondary" style={{ marginTop: '1rem' }}>
         View Summary & End Session
+      </Link>
+      <Link href={nextStationId} className="btn" style={{ marginTop: '0.5rem' }}>
+        Go to the Next Station
       </Link>
     </div>
   );
