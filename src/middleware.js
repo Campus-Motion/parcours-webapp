@@ -12,8 +12,8 @@ export function middleware(request) {
     return NextResponse.redirect(url);
   }
 
-  // If trying to access summary without a session
-  if (url.pathname === '/summary' && !userId) {
+  // If trying to access protected routes without a session
+  if ((url.pathname === '/summary' || url.pathname === '/map' || url.pathname.startsWith('/transit/')) && !userId) {
     url.pathname = '/';
     return NextResponse.redirect(url);
   }
@@ -22,5 +22,5 @@ export function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/station/:path*', '/summary'],
+  matcher: ['/station/:path*', '/summary', '/map', '/transit/:path*'],
 };

@@ -8,7 +8,6 @@ export default function StationPage({ params }) {
   const stationId = params.id;
   const [status, setStatus] = useState('loading');
   const [exercise, setExercise] = useState('');
-  const nextStationId = `${(Number(stationId) + 1)% 7}`;
   const hasFetched = useRef(false);
   
   useEffect(() => {
@@ -68,8 +67,8 @@ export default function StationPage({ params }) {
       <Link href="/summary" className="btn btn-secondary" style={{ marginTop: '1rem' }}>
         View Summary & End Session
       </Link>
-      <Link href={nextStationId} className="btn" style={{ marginTop: '0.5rem' }}>
-        Go to the Next Station
+      <Link href="/map" className="btn" style={{ marginTop: '0.5rem' }}>
+        Choose Next Station
       </Link>
     </div>
   );
