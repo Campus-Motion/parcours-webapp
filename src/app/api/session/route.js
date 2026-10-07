@@ -10,7 +10,7 @@ export async function GET() {
     return NextResponse.json({ scans: [] });
   }
 
-  const scans = getScansByUser(userId);
+  const scans = await getScansByUser(userId);
   return NextResponse.json({ scans });
 }
 
@@ -19,7 +19,7 @@ export async function DELETE() {
   const userId = cookieStore.get('userId')?.value;
   
   if (userId) {
-    clearUserSession(userId);
+    await clearUserSession(userId);
     cookieStore.delete('userId');
   }
   

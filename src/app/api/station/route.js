@@ -14,7 +14,7 @@ export async function POST(request) {
     const { stationId } = await request.json();
     
     if (stationId) {
-      recordScan(userId, stationId);
+      await recordScan(userId, stationId);
     }
     
     return NextResponse.json({ success: true, userId });
