@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { recordScan } from '@/lib/db';
+import { exercises } from '@/lib/exercises';
 
 export async function POST(request) {
   try {
@@ -13,9 +14,11 @@ export async function POST(request) {
 
     const { stationId } = await request.json();
     
-    if (stationId) {
-      await recordScan(userId, stationId);
+    if (typeof stationId !== 'string' || !Object.hasOwn(exercises, stationId)) {
+      return NextResponse.json({ success: false, error: 'Unknown station' }, { status: 400 });
     }
+
+    await recordScan(userId, stationId);
     
     return NextResponse.json({ success: true, userId });
   } catch (error) {

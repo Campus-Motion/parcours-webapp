@@ -6,8 +6,14 @@ export async function POST() {
   let userId = cookieStore.get('userId')?.value;
   
   if (!userId) {
-    userId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-    cookieStore.set('userId', userId, { maxAge: 60 * 60 * 24 }); // 1 day session
+    userId = crypto.randomUUID();
+    cookieStore.set('userId', userId, {
+      maxAge: 60 * 60 * 24, // 1 day session
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+    });
   }
 
   return NextResponse.json({ success: true });
